@@ -6,7 +6,6 @@
   "scripts": {
     "start": "nodemon server.js",
     "start:prod": "SET NODE_ENV=development&&nodemon server.js"
-    
   },
   "author": "",
   "license": "ISC",
@@ -28,5 +27,8 @@
     "eslint-plugin-react": "^7.12.4",
     "mongoose": "^5.13.22",
     "prettier": "^1.17.0"
+  },
+  "engines": {
+    "node": ">=10.0.0"
   }
 }
