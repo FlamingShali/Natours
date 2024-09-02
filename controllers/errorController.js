@@ -5,6 +5,14 @@ const handleCastErrorDB = err => {
   return new AppError(message, 400);
 };
 
+const handleValidationErrorDB = err => {
+  const errors = Object.values(err.errors).map(el => el.message);
+
+  const message = `Invalid input data. ${errors.join('. ')}`;
+
+  return new AppError(message, 400);
+};
+
 const handlerDuplicateFieldsDB = err => {
   const value = err.errmsg.match(/(["'])(?:(?=(\\?))\2.)*?\1/)[0];
   console.log(value);
@@ -48,6 +56,8 @@ module.exports = (err, req, res, next) => {
 
     if (error.name === 'CastError') error = handleCastErrorDB(error);
     if (error.code === 11000) error = handlerDuplicateFieldsDB(error);
+    if (error._message === 'Validation failed')
+      error = handleValidationErrorDB(error);
 
     sendErrorProd(error, res);
   }
